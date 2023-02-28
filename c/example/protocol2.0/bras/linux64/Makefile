@@ -49,7 +49,7 @@ LIBRARIES  += -lrt
 # Files
 #---------------------------------------------------------------------
 SOURCES = bras.c \
-          ../poulailleau/poulailleau.c
+          ../../poulailleau/poulailleau.c
     # *** OTHER SOURCES GO HERE ***
 
 OBJECTS  = $(addsuffix .o,$(addprefix $(DIR_OBJS)/,$(basename $(notdir $(SOURCES)))))
@@ -69,6 +69,9 @@ clean:
 
 make_directory:
 	mkdir -p $(DIR_OBJS)/
+
+$(DIR_OBJS)/poulailleau.o: ../../poulailleau/poulailleau.c
+	$(CC) $(CCFLAGS) -c $? -o $@
 
 $(DIR_OBJS)/%.o: ../%.c
 	$(CC) $(CCFLAGS) -c $? -o $@
