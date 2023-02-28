@@ -40,7 +40,7 @@ LNKFLAGS    = $(CXFLAGS) #-Wl,-rpath,$(DIR_THOR)/lib
 #---------------------------------------------------------------------
 # Core components (all of these are likely going to be needed)
 #---------------------------------------------------------------------
-INCLUDES   += -I$(DIR_DXL)/include/dynamixel_sdk -I$(DIR_DXL)/c/example/protocol2.0/poulailleau
+INCLUDES   += -I$(DIR_DXL)/include/dynamixel_sdk -I$(DIR_DXL)/example/protocol2.0/poulailleau
 LIBRARIES  += -ldxl_sbc_c
 LIBRARIES  += -lrt
 
