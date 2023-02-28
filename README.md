@@ -12,6 +12,19 @@
 The ROBOTIS Dynamixel SDK is a software development kit that provides Dynamixel control functions using packet communication. The API is designed for Dynamixel actuators and Dynamixel-based platforms. For more information on Dynamixel SDK, please refer to the e-manual below.
 - [ROBOTIS e-Manual for Dynamixel SDK](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
 
+## BTS Usage
+
+```bash
+git clone https://github.com/vpoulailleau/DynamixelSDK
+cd DynamixelSDK/c/build/linux_sbc
+make
+sudo make install
+cd -
+cd DynamixelSDK/c/example/protocol2.0/bras/linux_sbc
+make
+./bras
+```
+
 ## Supported Programming Languages
 DynamixelSDK supports various programming languages.
 - **C**: *Dynamic library and source code of this library and examples
