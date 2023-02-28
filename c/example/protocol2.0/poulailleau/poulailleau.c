@@ -6,6 +6,8 @@
 #include <conio.h>
 #endif
 
+#include <stdlib.h>
+#include <string.h>
 #include <poulailleau.h>
 
 #define PROTOCOL_VERSION 2.0
@@ -68,11 +70,11 @@ int dxl_open(char *serial_link, uint32_t baudrate)
 
     if (openPort(port_num))
     {
-        printf("Succeeded to open the port!\n");
+        log_info("Succeeded to open the port!\n");
     }
     else
     {
-        printf("Failed to open the port!\n");
+        log_error("Failed to open the port!\n");
         printf("Press any key to terminate...\n");
         getch();
         return 1;
@@ -80,11 +82,11 @@ int dxl_open(char *serial_link, uint32_t baudrate)
 
     if (setBaudRate(port_num, baudrate))
     {
-        printf("Succeeded to change the baudrate!\n");
+        log_info("Succeeded to change the baudrate!\n");
     }
     else
     {
-        printf("Failed to change the baudrate!\n");
+        log_error("Failed to change the baudrate!\n");
         printf("Press any key to terminate...\n");
         getch();
         return 1;
@@ -103,7 +105,9 @@ static int _dxl_check_communication_success(void)
     int dxl_comm_result = getLastTxRxResult(port_num, PROTOCOL_VERSION);
     if (dxl_comm_result != COMM_SUCCESS)
     {
-        printf("%s\n", getTxRxResult(PROTOCOL_VERSION, dxl_comm_result));
+        char msg[1024];
+        snprintf(msg, 1023, "%s\n", getTxRxResult(PROTOCOL_VERSION, dxl_comm_result));
+        log_error(msg);
         return 1;
     }
     else
@@ -111,7 +115,9 @@ static int _dxl_check_communication_success(void)
         uint8_t dxl_error = getLastRxPacketError(port_num, PROTOCOL_VERSION);
         if (dxl_error)
         {
-            printf("%s\n", getRxPacketError(PROTOCOL_VERSION, dxl_error));
+            char msg[1024];
+            snprintf(msg, 1023, "%s\n", getRxPacketError(PROTOCOL_VERSION, dxl_error));
+            log_error(msg);
             return 2;
         }
     }
@@ -153,4 +159,23 @@ uint32_t dxl_read_4byte_tx_rx(int dynamixel_id, int register_addr)
         return value;
     else
         return -1;
+}
+
+static void _log(char *prefix, char *msg)
+{
+    size_t log_len = strlen(msg) + strlen(prefix) + 5;
+    char *log_message = malloc(log_len);
+    snprintf(log_message, log_len, "%s %s", prefix, msg);
+    puts(log_message);
+    free(log_message);
+}
+
+void log_info(char *msg)
+{
+    _log("[INFO]", msg);
+}
+
+void log_error(char *msg)
+{
+    _log("[ERROR]", msg);
 }

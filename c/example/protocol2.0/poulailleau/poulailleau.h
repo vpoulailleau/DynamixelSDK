@@ -6,6 +6,8 @@
 
 #define ESC_ASCII_VALUE 0x1b
 
+void log_info(char *msg);
+void log_error(char *msg);
 int getch(void);
 int kbhit(void);
 int dxl_open(char *serial_link, uint32_t baudrate);

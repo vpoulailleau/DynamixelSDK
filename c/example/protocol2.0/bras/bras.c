@@ -1,6 +1,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <poulailleau.h>
 
 // Control table address
@@ -26,6 +27,7 @@ int main()
         DXL_MINIMUM_POSITION_VALUE, DXL_MAXIMUM_POSITION_VALUE};
     int32_t dxl_present_position = 0;
 
+    log_info("opening device");
     dxl_open(DEVICENAME, BAUDRATE);
 
     dxl_write_1byte_tx_rx(DXL_ID, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
