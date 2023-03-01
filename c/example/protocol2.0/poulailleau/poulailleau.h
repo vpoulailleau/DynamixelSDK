@@ -12,6 +12,7 @@ int getch(void);
 int kbhit(void);
 int dxl_open(char *serial_link, uint32_t baudrate);
 void dxl_close(void);
+void dxl_ping(int dynamixel_id);
 void dxl_write_1byte_tx_rx(
     int dynamixel_id, int register_addr, uint8_t register_value);
 void dxl_write_4byte_tx_rx(

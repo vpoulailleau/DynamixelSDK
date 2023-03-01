@@ -9,10 +9,16 @@
 #define ADDR_PRO_GOAL_POSITION 596
 #define ADDR_PRO_PRESENT_POSITION 611
 
-#define DXL_ID 1 // Dynamixel ID: 1
+#define SHOULDER_1_ID 1
+#define SHOULDER_2_ID 2
+#define ELBOW_ID 3
+#define DXL_ID 1 // TODO à virer
+
 #define BAUDRATE 57600
-#define DEVICENAME "/dev/ttyUSB0" // Check which port is being used on your controller
-                                  // ex) Windows: "COM1"   Linux: "/dev/ttyUSB0" Mac: "/dev/tty.usbserial-*"
+#define DEVICENAME "COM1" // Check which port is being used on your controller
+                          // Windows: "COM1"
+                          // Linux: "/dev/ttyUSB0"
+                          // Mac: "/dev/tty.usbserial-*"
 
 #define TORQUE_ENABLE 1
 #define TORQUE_DISABLE 0
@@ -27,8 +33,13 @@ int main()
         DXL_MINIMUM_POSITION_VALUE, DXL_MAXIMUM_POSITION_VALUE};
     int32_t dxl_present_position = 0;
 
-    log_info("opening device");
+    log_info("Ouverture de la liaison série (COM1)");
     dxl_open(DEVICENAME, BAUDRATE);
+
+    log_info("Connexion aux moteurs");
+    dxl_ping(SHOULDER_1_ID);
+    dxl_ping(SHOULDER_2_ID);
+    dxl_ping(ELBOW_ID);
 
     dxl_write_1byte_tx_rx(DXL_ID, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 

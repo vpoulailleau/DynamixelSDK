@@ -124,6 +124,12 @@ static int _dxl_check_communication_success(void)
     return 0;
 }
 
+void dxl_ping(int dynamixel_id)
+{
+    pingGetModelNum(port_num, PROTOCOL_VERSION, dynamixel_id);
+    _dxl_check_communication_success();
+}
+
 void dxl_write_1byte_tx_rx(
     int dynamixel_id, int register_addr, uint8_t register_value)
 {
