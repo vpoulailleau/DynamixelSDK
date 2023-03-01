@@ -6,9 +6,10 @@
 
 #define ESC_ASCII_VALUE 0x1b
 
-#define MX28_LED_ON 1
-#define MX28_LED_OFF 0
+#define MX28_ON 1
+#define MX28_OFF 0
 #define MX28_LED_SET(id, state) dxl_write_1byte_tx_rx(id, 25, state)
+#define MX28_TORQUE_SET(id, state) dxl_write_1byte_tx_rx(id, 24, state)
 
 void log_info(char *msg);
 void log_error(char *msg);

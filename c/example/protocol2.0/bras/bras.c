@@ -31,7 +31,7 @@ float conversion_position_degre(float position)
     return position / 4096.0 * 360;
 }
 
-uint32_t conversion_position_degre(float position)
+uint32_t conversion_degre_position(float position)
 {
     return (uint32_t)(position * 4096 / 360.0);
 }
@@ -57,9 +57,20 @@ int main()
     dxl_ping(ELBOW_ID);
 
     log_info("Allumage des LED des moteurs");
-    MX28_LED_SET(SHOULDER_1_ID, MX28_LED_ON);
-    MX28_LED_SET(SHOULDER_2_ID, MX28_LED_ON);
-    MX28_LED_SET(ELBOW_ID, MX28_LED_ON);
+    MX28_LED_SET(SHOULDER_1_ID, MX28_ON);
+    MX28_LED_SET(SHOULDER_2_ID, MX28_ON);
+    MX28_LED_SET(ELBOW_ID, MX28_ON);
+
+    /*
+    info_moteur(SHOULDER_1_ID);
+    info_moteur(SHOULDER_2_ID);
+    info_moteur(ELBOW_ID);
+    */
+
+    log_info("Mise en route des moteurs");
+    MX28_TORQUE_SET(SHOULDER_1_ID, MX28_ON);
+    MX28_TORQUE_SET(SHOULDER_2_ID, MX28_ON);
+    MX28_TORQUE_SET(ELBOW_ID, MX28_ON);
 
     dxl_write_1byte_tx_rx(DXL_ID, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 
