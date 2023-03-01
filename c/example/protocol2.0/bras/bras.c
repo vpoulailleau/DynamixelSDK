@@ -26,6 +26,21 @@
 #define DXL_MAXIMUM_POSITION_VALUE 150000
 #define DXL_MOVING_STATUS_THRESHOLD 20
 
+float conversion_position_degre(float position)
+{
+    return position / 4096.0 * 360;
+}
+
+uint32_t conversion_position_degre(float position)
+{
+    return (uint32_t)(position * 4096 / 360.0);
+}
+
+void info_moteur(int dynamixel_id)
+{
+    // TODO
+}
+
 int main()
 {
     int index = 0;
