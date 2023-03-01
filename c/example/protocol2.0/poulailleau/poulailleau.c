@@ -25,7 +25,7 @@ void usleep(uint64_t usec)
 }
 #endif
 
-#define PROTOCOL_VERSION 2.0
+#define PROTOCOL_VERSION 1.0
 
 static int port_num = 0;
 
