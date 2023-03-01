@@ -43,10 +43,7 @@ void info_moteur(int dynamixel_id)
 
 int main()
 {
-    int index = 0;
-    int dxl_goal_position[2] = {
-        DXL_MINIMUM_POSITION_VALUE, DXL_MAXIMUM_POSITION_VALUE};
-    int32_t dxl_present_position = 0;
+    char msg[1024];
 
     log_info("Ouverture de la liaison série (COM1)");
     dxl_open(DEVICENAME, BAUDRATE);
@@ -81,34 +78,38 @@ int main()
     MX28_MOVING_SPEED_SET(SHOULDER_2_ID, 40);
     MX28_MOVING_SPEED_SET(ELBOW_ID, 40);
 
-    dxl_write_1byte_tx_rx(DXL_ID, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
+    log_info("Déplacement de l'épaule");
+    MX28_GOAL_POSITION_SET(SHOULDER_1_ID, 1500);
+    MX28_GOAL_POSITION_SET(SHOULDER_2_ID, conversion_degre_position(180));
 
-    while (1)
+    for (uint8_t i = 0; i < 4; i++)
     {
-        printf("Press any key to continue! (or press ESC to quit!)\n");
-        if (getch() == ESC_ASCII_VALUE)
-            break;
-
-        dxl_write_4byte_tx_rx(
-            DXL_ID, ADDR_PRO_GOAL_POSITION, dxl_goal_position[index]);
-
-        do
+        log_info("Déplacement du coude");
+        MX28_GOAL_POSITION_SET(ELBOW_ID, conversion_degre_position(130));
+        for (uint8_t j = 0; j < 20; j++)
         {
-            dxl_present_position = dxl_read_4byte_tx_rx(
-                DXL_ID, ADDR_PRO_PRESENT_POSITION);
-            printf(
-                "[ID:%03d] GoalPos:%03d  PresPos:%03d\n",
-                DXL_ID,
-                dxl_goal_position[index],
-                dxl_present_position);
-        } while (
-            abs(dxl_goal_position[index] - dxl_present_position) > DXL_MOVING_STATUS_THRESHOLD);
+            sleep_ms(100);
+            snprintf(
+                msg,
+                1023,
+                "Position coude : %f°",
+                conversion_position_degre(MX28_PRESENT_POSITION_GET(ELBOW_ID)));
+            log_info(msg);
+        }
 
-        // Change goal position
-        index = 1 - index;
+        log_info("Déplacement du coude");
+        MX28_GOAL_POSITION_SET(ELBOW_ID, conversion_degre_position(220));
+        for (uint8_t j = 0; j < 20; j++)
+        {
+            sleep_ms(100);
+            snprintf(
+                msg,
+                1023,
+                "Position coude : %f°",
+                conversion_position_degre(MX28_PRESENT_POSITION_GET(ELBOW_ID)));
+            log_info(msg);
+        }
     }
-
-    dxl_write_1byte_tx_rx(DXL_ID, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
 
     dxl_close();
 

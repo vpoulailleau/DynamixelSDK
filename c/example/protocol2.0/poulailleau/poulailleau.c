@@ -1,14 +1,29 @@
+#include "poulailleau.h"
+#include <stdlib.h>
+#include <string.h>
+
 #if defined(__linux__) || defined(__APPLE__)
 #include <fcntl.h>
 #include <termios.h>
+#include <unistd.h>
 #define STDIN_FILENO 0
 #elif defined(_WIN32) || defined(_WIN64)
 #include <conio.h>
-#endif
+#include <windows.h>
 
-#include <stdlib.h>
-#include <string.h>
-#include <poulailleau.h>
+void usleep(uint64_t usec)
+{
+    HANDLE timer;
+    LARGE_INTEGER ft;
+
+    ft.QuadPart = -(10 * usec); // Convert to 100 nanosecond interval, negative value indicates relative time
+
+    timer = CreateWaitableTimer(NULL, TRUE, NULL);
+    SetWaitableTimer(timer, &ft, 0, NULL, NULL, 0);
+    WaitForSingleObject(timer, INFINITE);
+    CloseHandle(timer);
+}
+#endif
 
 #define PROTOCOL_VERSION 2.0
 
@@ -60,6 +75,11 @@ int kbhit(void)
 #elif defined(_WIN32) || defined(_WIN64)
     return _kbhit();
 #endif
+}
+
+void sleep_ms(uint32_t ms)
+{
+    usleep(ms * 1000);
 }
 
 int dxl_open(char *serial_link, uint32_t baudrate)
@@ -152,6 +172,19 @@ void dxl_write_2byte_tx_rx(
         register_addr,
         register_value);
     _dxl_check_communication_success();
+}
+
+uint16_t dxl_read_2byte_tx_rx(int dynamixel_id, int register_addr)
+{
+    uint16_t value = read2ByteTxRx(
+        port_num,
+        PROTOCOL_VERSION,
+        dynamixel_id,
+        register_addr);
+    if (!_dxl_check_communication_success())
+        return value;
+    else
+        return -1;
 }
 
 void dxl_write_4byte_tx_rx(
