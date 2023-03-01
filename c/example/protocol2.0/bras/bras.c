@@ -76,6 +76,10 @@ int main()
     MX28_GOAL_POSITION_SET(SHOULDER_1_ID, conversion_degre_position(180));
     MX28_GOAL_POSITION_SET(SHOULDER_2_ID, conversion_degre_position(220));
     MX28_GOAL_POSITION_SET(ELBOW_ID, conversion_degre_position(260));
+    sleep(1);
+    MX28_MOVING_SPEED_SET(SHOULDER_1_ID, 40);
+    MX28_MOVING_SPEED_SET(SHOULDER_2_ID, 40);
+    MX28_MOVING_SPEED_SET(ELBOW_ID, 40);
 
     dxl_write_1byte_tx_rx(DXL_ID, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 

@@ -11,12 +11,14 @@
 #define MX28_LED_SET(id, state) dxl_write_1byte_tx_rx(id, 25, state)
 #define MX28_TORQUE_SET(id, state) dxl_write_1byte_tx_rx(id, 24, state)
 #define MX28_GOAL_POSITION_SET(id, value) dxl_write_2byte_tx_rx(id, 30, value)
+#define MX28_MOVING_SPEED_SET(id, value) dxl_write_2byte_tx_rx(id, 32, value)
 
 void log_info(char *msg);
 void log_error(char *msg);
 
 int getch(void);
 int kbhit(void);
+unsigned int sleep(unsigned int nb_sec);
 
 int dxl_open(char *serial_link, uint32_t baudrate);
 void dxl_close(void);
