@@ -8,7 +8,7 @@
 #define SHOULDER_2_ID 2
 #define ELBOW_ID 3
 
-#define BAUDRATE 57600
+#define BAUDRATE 1000000
 #define DEVICENAME "COM1" // Check which port is being used on your controller
                           // Windows: "COM1"
                           // Linux: "/dev/ttyUSB0"
@@ -26,7 +26,39 @@ uint32_t conversion_degre_position(float position)
 
 void info_moteur(int dynamixel_id)
 {
-    // TODO
+    char msg[1024];
+    log_debug("------------------------------------------------------");
+    snprintf(msg, 1023, "Identifiant du moteur : %d", MX28_ID_GET(dynamixel_id));
+    log_debug(msg);
+    snprintf(msg, 1023, "État de la LED (0 éteinte, 1 allumée) : %d", MX28_LED_GET(dynamixel_id));
+    log_debug(msg);
+    snprintf(msg, 1023, "Gain P : %d", MX28_P_GAIN_GET(dynamixel_id));
+    log_debug(msg);
+    snprintf(msg, 1023, "Gain I : %d", MX28_I_GAIN_GET(dynamixel_id));
+    log_debug(msg);
+    snprintf(msg, 1023, "Gain D : %d", MX28_D_GAIN_GET(dynamixel_id));
+    log_debug(msg);
+    snprintf(
+        msg,
+        1023,
+        "Angle horaire limite : %f° (%d)",
+        conversion_position_degre(MX28_CW_ANGLE_LIMIT_GET(dynamixel_id)),
+        MX28_CW_ANGLE_LIMIT_GET(dynamixel_id));
+    log_debug(msg);
+    snprintf(
+        msg,
+        1023,
+        "Angle anti-horaire limite : %f° (%d)",
+        conversion_position_degre(MX28_CCW_ANGLE_LIMIT_GET(dynamixel_id)),
+        MX28_CCW_ANGLE_LIMIT_GET(dynamixel_id));
+    log_debug(msg);
+    snprintf(
+        msg,
+        1023,
+        "Vitesse de déplacement : %f°/s (%d)",
+        MX28_MOVING_SPEED_GET(dynamixel_id) * 6 * 0.114,
+        MX28_MOVING_SPEED_GET(dynamixel_id));
+    log_debug(msg);
 }
 
 int main()

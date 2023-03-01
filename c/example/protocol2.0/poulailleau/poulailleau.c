@@ -162,6 +162,19 @@ void dxl_write_1byte_tx_rx(
     _dxl_check_communication_success();
 }
 
+uint8_t dxl_read_1byte_tx_rx(int dynamixel_id, int register_addr)
+{
+    uint8_t value = read1ByteTxRx(
+        port_num,
+        PROTOCOL_VERSION,
+        dynamixel_id,
+        register_addr);
+    if (!_dxl_check_communication_success())
+        return value;
+    else
+        return -1;
+}
+
 void dxl_write_2byte_tx_rx(
     int dynamixel_id, int register_addr, uint16_t register_value)
 {
@@ -219,6 +232,11 @@ static void _log(char *prefix, char *msg)
     snprintf(log_message, log_len, "%s %s", prefix, msg);
     puts(log_message);
     free(log_message);
+}
+
+void log_debug(char *msg)
+{
+    _log("[DEBUG]", msg);
 }
 
 void log_info(char *msg)
