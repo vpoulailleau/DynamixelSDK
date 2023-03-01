@@ -41,6 +41,11 @@ int main()
     dxl_ping(SHOULDER_2_ID);
     dxl_ping(ELBOW_ID);
 
+    log_info("Allumage des LED des moteurs");
+    MX28_LED_SET(SHOULDER_1_ID, MX28_LED_ON);
+    MX28_LED_SET(SHOULDER_2_ID, MX28_LED_ON);
+    MX28_LED_SET(ELBOW_ID, MX28_LED_ON);
+
     dxl_write_1byte_tx_rx(DXL_ID, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 
     while (1)
