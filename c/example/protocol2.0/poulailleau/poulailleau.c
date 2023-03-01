@@ -142,6 +142,18 @@ void dxl_write_1byte_tx_rx(
     _dxl_check_communication_success();
 }
 
+void dxl_write_2byte_tx_rx(
+    int dynamixel_id, int register_addr, uint16_t register_value)
+{
+    write2ByteTxRx(
+        port_num,
+        PROTOCOL_VERSION,
+        dynamixel_id,
+        register_addr,
+        register_value);
+    _dxl_check_communication_success();
+}
+
 void dxl_write_4byte_tx_rx(
     int dynamixel_id, int register_addr, uint32_t register_value)
 {

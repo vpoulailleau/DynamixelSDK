@@ -72,6 +72,11 @@ int main()
     MX28_TORQUE_SET(SHOULDER_2_ID, MX28_ON);
     MX28_TORQUE_SET(ELBOW_ID, MX28_ON);
 
+    log_info("Mise en position initiale");
+    MX28_GOAL_POSITION_SET(SHOULDER_1_ID, conversion_degre_position(180));
+    MX28_GOAL_POSITION_SET(SHOULDER_2_ID, conversion_degre_position(220));
+    MX28_GOAL_POSITION_SET(ELBOW_ID, conversion_degre_position(260));
+
     dxl_write_1byte_tx_rx(DXL_ID, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 
     while (1)
