@@ -111,6 +111,22 @@ int main()
         }
     }
 
+    log_info("Extinction des moteurs");
+    MX28_GOAL_POSITION_SET(ELBOW_ID, conversion_degre_position(260));
+    sleep(3);
+    MX28_TORQUE_SET(SHOULDER_1_ID, MX28_OFF);
+    MX28_TORQUE_SET(SHOULDER_2_ID, MX28_OFF);
+    MX28_TORQUE_SET(ELBOW_ID, MX28_OFF);
+
+    log_info("Extinction des LED des moteurs");
+    MX28_LED_SET(SHOULDER_1_ID, MX28_ON);
+    MX28_LED_SET(SHOULDER_2_ID, MX28_ON);
+    MX28_LED_SET(ELBOW_ID, MX28_ON);
+
+    MX28_MOVING_SPEED_SET(SHOULDER_1_ID, 0);
+    MX28_MOVING_SPEED_SET(SHOULDER_2_ID, 0);
+    MX28_MOVING_SPEED_SET(ELBOW_ID, 0);
+
     dxl_close();
 
     return 0;
