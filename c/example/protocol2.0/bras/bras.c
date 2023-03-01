@@ -4,27 +4,15 @@
 #include <string.h>
 #include <poulailleau.h>
 
-// Control table address
-#define ADDR_PRO_TORQUE_ENABLE 562
-#define ADDR_PRO_GOAL_POSITION 596
-#define ADDR_PRO_PRESENT_POSITION 611
-
 #define SHOULDER_1_ID 1
 #define SHOULDER_2_ID 2
 #define ELBOW_ID 3
-#define DXL_ID 1 // TODO à virer
 
 #define BAUDRATE 57600
 #define DEVICENAME "COM1" // Check which port is being used on your controller
                           // Windows: "COM1"
                           // Linux: "/dev/ttyUSB0"
                           // Mac: "/dev/tty.usbserial-*"
-
-#define TORQUE_ENABLE 1
-#define TORQUE_DISABLE 0
-#define DXL_MINIMUM_POSITION_VALUE -150000
-#define DXL_MAXIMUM_POSITION_VALUE 150000
-#define DXL_MOVING_STATUS_THRESHOLD 20
 
 float conversion_position_degre(float position)
 {
