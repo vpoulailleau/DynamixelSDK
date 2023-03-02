@@ -21,8 +21,12 @@ make
 sudo make install
 cd -
 cd DynamixelSDK/c/example/protocol2.0/bras/linux_sbc
-make
+make # compilation
 ./bras
+cd -
+cd DynamixelSDK/c/example/protocol2.0/jambe/linux_sbc
+make # compilation
+./jambe
 ```
 
 ## Supported Programming Languages
