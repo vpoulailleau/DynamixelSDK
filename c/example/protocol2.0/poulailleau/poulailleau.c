@@ -1,6 +1,7 @@
 #include "poulailleau.h"
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #if defined(__linux__) || defined(__APPLE__)
 #include <fcntl.h>
@@ -225,8 +226,23 @@ uint32_t dxl_read_4byte_tx_rx(int dynamixel_id, int register_addr)
         return -1;
 }
 
+static int utc_system_timestamp(char *buf)
+{
+    const int bufsize = 63;
+    const int tmpsize = 21;
+    struct timespec now;
+    struct tm tm;
+    int retval = clock_gettime(CLOCK_REALTIME, &now);
+    gmtime_r(&now.tv_sec, &tm);
+    strftime(buf, tmpsize, "%Y-%m-%dT%H:%M:%S.", &tm);
+    snprintf(buf + tmpsize - 1, bufsize - tmpsize, "%09luZ", now.tv_nsec);
+    return retval;
+}
+
 static void _log(char *prefix, char *msg)
 {
+    char date[64];
+    utc_system_timestamp(date);
     size_t log_len = strlen(msg) + strlen(prefix) + 5;
     char *log_message = malloc(log_len);
     snprintf(log_message, log_len, "%s %s", prefix, msg);
@@ -234,7 +250,7 @@ static void _log(char *prefix, char *msg)
     FILE *file = fopen("darwin.log", "a");
     if (file)
     {
-        fprintf(file, "%s %s\n", prefix, msg);
+        fprintf(file, "%s   %s %s\n", date, prefix, msg);
         fclose(file);
     }
     free(log_message);
