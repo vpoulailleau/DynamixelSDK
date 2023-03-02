@@ -231,6 +231,12 @@ static void _log(char *prefix, char *msg)
     char *log_message = malloc(log_len);
     snprintf(log_message, log_len, "%s %s", prefix, msg);
     puts(log_message);
+    FILE *file = fopen("darwin.log", "a");
+    if (file)
+    {
+        fprintf(file, "%s %s\n", prefix, msg);
+        fclose(file);
+    }
     free(log_message);
 }
 
