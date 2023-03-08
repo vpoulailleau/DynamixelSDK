@@ -1,18 +1,18 @@
 /*******************************************************************************
-* Copyright 2017 ROBOTIS CO., LTD.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*******************************************************************************/
+ * Copyright 2017 ROBOTIS CO., LTD.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
 
 /* Author: Ryu Woon Jung (Leon) */
 
@@ -33,14 +33,16 @@
 #include "protocol2_packet_handler.h"
 #endif
 
+PacketData *packetData;
+
 void packetHandler()
 {
   int port_num;
 
   if (packetData == NULL)
-    packetData = (PacketData*)malloc(1 * sizeof(PacketData));
+    packetData = (PacketData *)malloc(1 * sizeof(PacketData));
 
-  packetData = (PacketData*)realloc(packetData, g_used_port_num * sizeof(PacketData));
+  packetData = (PacketData *)realloc(packetData, g_used_port_num * sizeof(PacketData));
 
   for (port_num = 0; port_num < g_used_port_num; port_num++)
   {
@@ -65,7 +67,6 @@ const char *getTxRxResult(int protocol_version, int result)
   }
 }
 
-
 const char *getRxPacketError(int protocol_version, uint8_t error)
 {
   if (protocol_version == 1)
@@ -77,7 +78,6 @@ const char *getRxPacketError(int protocol_version, uint8_t error)
     return getRxPacketError2(error);
   }
 }
-
 
 int getLastTxRxResult(int port_num, int protocol_version)
 {
@@ -101,7 +101,6 @@ uint8_t getLastRxPacketError(int port_num, int protocol_version)
     return getLastRxPacketError2(port_num);
   }
 }
-
 
 void setDataWrite(int port_num, int protocol_version, uint16_t data_length, uint16_t data_pos, uint32_t data)
 {
