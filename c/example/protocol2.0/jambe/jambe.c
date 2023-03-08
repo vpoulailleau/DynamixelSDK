@@ -6,7 +6,7 @@
 
 #define HIP_ID 2
 #define KNEE_ID 4
-#define ANKLE_ID 3
+#define ANKLE_ID 5
 
 #define BAUDRATE 1000000
 #define DEVICENAME "COM1" // Check which port is being used on your controller
@@ -103,20 +103,20 @@ int main()
     log_info("Mise en position initiale");
     MX28_GOAL_POSITION_SET(HIP_ID, conversion_degre_position(180));
     MX28_GOAL_POSITION_SET(KNEE_ID, conversion_degre_position(220));
-    MX28_GOAL_POSITION_SET(ANKLE_ID, conversion_degre_position(260));
+    MX28_GOAL_POSITION_SET(ANKLE_ID, conversion_degre_position(200));
     sleep(1);
     MX28_MOVING_SPEED_SET(HIP_ID, 20);
     MX28_MOVING_SPEED_SET(KNEE_ID, 20);
     MX28_MOVING_SPEED_SET(ANKLE_ID, 20);
 
     log_info("Déplacement du pied et de la hanche");
-    MX28_GOAL_POSITION_SET(HIP_ID, conversion_degre_position(135));
+    MX28_GOAL_POSITION_SET(HIP_ID, conversion_degre_position(200));
     MX28_GOAL_POSITION_SET(ANKLE_ID, conversion_degre_position(180));
 
     for (uint8_t i = 0; i < 4; i++)
     {
         log_info("Déplacement du genou");
-        MX28_GOAL_POSITION_SET(KNEE_ID, conversion_degre_position(130));
+        MX28_GOAL_POSITION_SET(KNEE_ID, conversion_degre_position(110));
         for (uint8_t j = 0; j < 20; j++)
         {
             sleep_ms(100);
@@ -129,7 +129,7 @@ int main()
         }
 
         log_info("Déplacement du genou");
-        MX28_GOAL_POSITION_SET(KNEE_ID, conversion_degre_position(220));
+        MX28_GOAL_POSITION_SET(KNEE_ID, conversion_degre_position(180));
         for (uint8_t j = 0; j < 20; j++)
         {
             sleep_ms(100);
@@ -143,7 +143,6 @@ int main()
     }
 
     log_info("Extinction des moteurs");
-    MX28_GOAL_POSITION_SET(KNEE_ID, conversion_degre_position(260));
     sleep(3);
     MX28_TORQUE_SET(HIP_ID, MX28_OFF);
     MX28_TORQUE_SET(KNEE_ID, MX28_OFF);
