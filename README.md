@@ -17,16 +17,16 @@ The ROBOTIS Dynamixel SDK is a software development kit that provides Dynamixel 
 ```bash
 git clone https://github.com/vpoulailleau/DynamixelSDK
 cd DynamixelSDK/c/build/linux_sbc
-make
-sudo make install
+make # compilation driver
+sudo make install # installation driver
 cd -
 cd DynamixelSDK/c/example/protocol2.0/bras/linux_sbc
 make # compilation
-./bras
+./bras # exécution
 cd -
 cd DynamixelSDK/c/example/protocol2.0/jambe/linux_sbc
 make # compilation
-./jambe
+./jambe # exécution
 ```
 
 ## Supported Programming Languages
